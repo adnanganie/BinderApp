@@ -1,0 +1,18 @@
+swiper-container {
+  height: 148px !important;
+  border-radius: 5px;
+  img {
+    width: 90%;
+  }
+
+  --swiper-pagination-bullet-inactive-color: var(--ion-color-medium, #cccccc);
+  --swiper-pagination-color: var(--ion-color-primary, #3880ff);
+}
+
+swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}

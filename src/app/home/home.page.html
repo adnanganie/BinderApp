@@ -14,5 +14,22 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  
+  <swiper-container
+    #swiper
+    (afterinit)="onSwiperReady()"
+    [autoplay]="true"
+    [keyboard]="true"
+    [loop]="true"
+    [pagination]="true"
+    (slideChange)="onSlideChange($event)"
+  >
+    @for (item of [1,2,3,4]; track $index) {
+    <swiper-slide>
+      <img
+        src="https://images.pexels.com/photos/18111140/pexels-photo-18111140/free-photo-of-sign-of-casino-cinema-hanging-on-facade.jpeg"
+        alt="banners"
+      />
+    </swiper-slide>
+    }
+  </swiper-container>
 </ion-content>
