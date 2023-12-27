@@ -1,0 +1,7 @@
+{
+  "name": "BinderApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
