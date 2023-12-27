@@ -34,8 +34,10 @@
             "prefix": "app",
             "style": "camelCase"
           }
-        ]
-      }
+        ],
+        "prettier/prettier": ["warn"]
+      },
+      "plugins": ["@typescript-eslint", "prettier"]
     },
     {
       "files": ["*.html"],
