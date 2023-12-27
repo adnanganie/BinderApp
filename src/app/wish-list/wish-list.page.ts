@@ -1,25 +1,12 @@
-import { Component } from '@angular/core'
-import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-} from '@ionic/angular/standalone'
-import { ExploreContainerComponent } from '../explore-container/explore-container.component'
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-wish-list',
   templateUrl: 'wish-list.page.html',
-  styleUrls: ['wish-list.page.scss'],
-  standalone: true,
-  imports: [
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    ExploreContainerComponent,
-  ],
+  styleUrls: ['wish-list.page.scss']
 })
 export class WishListPage {
+
   constructor() {}
+
 }
