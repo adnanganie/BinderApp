@@ -36,21 +36,25 @@
   </swiper-container>
 
   <ion-searchbar
+    *ngIf="courses.length > 0"
     mode="ios"
-    showClearButton="never"
     placeholder="Search"
-    (ionInput)="onSearchChange($event)"
+    (ionInput)="onSearchTextChanged($event)"
+    (ionClear)="onSearchCancel($event)"
   ></ion-searchbar>
 
   <!-- Sort button -->
-  <ion-button (click)="toggleSortDirection()">
-    Sort {{ sortDirection === 'asc' ? 'Ascending' : 'Descending' }}
+  <ion-button (click)="toggleSortDirection()" shape="round">
+    Sort {{ sortDirection === 'asc' ? 'Asc' : 'Aesc' }}
   </ion-button>
 
   <!-- Courses section starts -->
-
   @for (course of filteredCourses; track $index) {
   <ion-card mode="ios">
+    <img
+      alt="image-placeholder"
+      src="https://ionicframework.com/docs/img/demos/card-media.png"
+    />
     <ion-card-header mode="md">
       <ion-card-title>{{ course.courseName }}</ion-card-title>
       <ion-card-subtitle>{{ course.author }}</ion-card-subtitle>
@@ -64,10 +68,10 @@
       <p>
         <ion-chip *ngFor="let tag of course.tags"> {{ tag }} </ion-chip>
       </p>
-      <ion-button (click)="addToCart(course)">
+      <ion-button (click)="addToCart(course)" shape="round" size="small">
         <ion-icon name="cart"></ion-icon
       ></ion-button>
-      <ion-button (click)="addToWishlist(course)">
+      <ion-button (click)="addToWishlist(course)" shape="round" size="small">
         <ion-icon
           [name]="!!courseService.isInWishlist(course)?'star':'heart'"
         ></ion-icon>
@@ -75,6 +79,12 @@
     </ion-card-content>
   </ion-card>
   }
-
   <!-- Courses section ends -->
+
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data..."
+    ></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

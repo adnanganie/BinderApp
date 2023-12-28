@@ -3,7 +3,7 @@ import { Swiper } from 'swiper'
 import { register } from 'swiper/element/bundle'
 import { Course } from '../models/courses.model'
 import { CourseService } from '../services/course.service'
-import { ToastController } from '@ionic/angular'
+import { IonInfiniteScroll, ToastController } from '@ionic/angular'
 
 register()
 @Component({
@@ -12,18 +12,28 @@ register()
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  @ViewChild(IonInfiniteScroll) infiniteScroll?: IonInfiniteScroll
+
   @ViewChild('swiper')
   swiperRef: ElementRef | undefined
   swiper?: Swiper
 
-  totalItemsInCart: number = 0; // Variable to store the total count
+  totalItemsInCart: number = 0 // Variable to store the total count
+
+  listOfcourses: Course[] = []
 
   courses: Course[] = []
   filteredCourses: Course[] = []
   searchTerm: string = ''
   sortDirection: 'asc' | 'desc' = 'asc'
 
-  constructor(public courseService: CourseService,   public toastController: ToastController) {}
+  itemsPerPage = 10
+  currentPage = 1
+
+  constructor(
+    public courseService: CourseService,
+    public toastController: ToastController
+  ) {}
 
   onSwiperReady() {
     this.swiper = this.swiperRef?.nativeElement.swiper
@@ -31,13 +41,13 @@ export class HomePage {
 
   ngOnInit() {
     this.courseService.getCoursesWithActualPrice().subscribe((courses) => {
-      this.courses = courses
-      this.filteredCourses = this.courses
+      this.listOfcourses = courses
+      this.paginatedCourses()
     })
 
     this.courseService.cart$.subscribe((cart) => {
-      this.totalItemsInCart = this.courseService.getTotalItemsInCart();
-    });
+      this.totalItemsInCart = this.courseService.getTotalItemsInCart()
+    })
   }
 
   addToCart(course: Course): void {
@@ -89,14 +99,63 @@ export class HomePage {
       })
   }
 
-  onSearchChange(event: any): void {
-    this.searchTerm = event.detail.value
-    this.applyFilters()
+  /** Shows the data again when backspace key is pressed to clear search text
+   * @param event
+   */
+  onSearchTextChanged(event: any) {
+    const searchText = event.detail.value
+    if (searchText.length == 0) {
+      this.filteredCourses = this.courses
+      if (this.infiniteScroll) {
+        this.infiniteScroll.disabled = false
+      }
+    } else {
+      this.searchTerm = event.detail.value
+      this.applyFilters()
+    }
+  }
+
+  /**
+   * Handles cancel event of searchbar
+   */
+  onSearchCancel(_$event: CustomEvent) {
+    this.filteredCourses = this.courses
   }
 
   toggleSortDirection(): void {
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc'
     this.applyFilters()
+  }
+
+  paginatedCourses() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage
+    const endIndex = startIndex + this.itemsPerPage
+    const result = this.listOfcourses.slice(startIndex, endIndex)
+    if (this.currentPage === 1) {
+      this.courses = result
+      this.filteredCourses = result
+    } else {
+      this.courses = this.courses.concat(result)
+      this.filteredCourses = this.courses
+    }
+  }
+
+  onPageChange(event: any) {
+    this.currentPage = event.detail.value
+  }
+
+  onIonInfinite(event: any) {
+    setTimeout(() => {
+      this.currentPage++
+      this.paginatedCourses()
+      event.target.complete()
+
+      if (
+        this.currentPage > Math.ceil(this.courses.length / this.itemsPerPage)
+      ) {
+        event.target.disabled = true
+      }
+    }, 500)
   }
 
   async showSuccessToast(courseName: string): Promise<void> {
@@ -123,7 +182,5 @@ export class HomePage {
   /**
    * Navigate to the cart-page
    */
-  goToCartPage(){
-
-  }
+  goToCartPage() {}
 }
