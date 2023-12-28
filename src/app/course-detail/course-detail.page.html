@@ -62,10 +62,27 @@
       <ion-col size-md="4">
         <!-- Video Card -->
         <ion-card>
-          <ion-img
+          <!-- <ion-img
             src="../../assets/images/banner-3.png"
             alt="Course Thumbnail"
-          ></ion-img>
+          ></ion-img> -->
+          <video
+            poster="../../assets/images/banner-3.png"
+            controls="controls"
+            preload="metadata"
+            autoplay="autoplay"
+            width="320"
+            height="240"
+            webkit-playsinline="webkit-playsinline"
+            class="videoPlayer"
+          >
+            <source
+              src="https://www.youtube.com/watch?v=eFOpupEe8n4"
+              type="video/mp4"
+            />
+
+            Your browser does not support the video tag.
+          </video>
           <ion-card-header>
             <ion-card-title>{{ selectedCourse.courseName }}</ion-card-title>
           </ion-card-header>

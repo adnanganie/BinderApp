@@ -1,17 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CourseDetailPage } from './course-detail.page';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { CourseDetailPage } from './course-detail.page'
 
 describe('CourseDetailPage', () => {
-  let component: CourseDetailPage;
-  let fixture: ComponentFixture<CourseDetailPage>;
+  let component: CourseDetailPage
+  let fixture: ComponentFixture<CourseDetailPage>
 
-  beforeEach(async(() => {
-    fixture = TestBed.createComponent(CourseDetailPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  }));
+  beforeEach(async () => {
+    fixture = TestBed.createComponent(CourseDetailPage)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
