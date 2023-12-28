@@ -1,0 +1,17 @@
+<div class="empty-view-parent">
+  <div class="empty-view-container">
+    <ion-icon
+      src="{{ icon }}"
+      name="{{ icon }}"
+      class="empty-view-image"
+    ></ion-icon>
+    <div class="empty-view-title">{{ title }}</div>
+    <ion-button
+      *ngIf="!hideRefreshButton"
+      (click)="buttonClickAction()"
+      mode="ios"
+    >
+      {{ buttonTitle }}
+    </ion-button>
+  </div>
+</div>

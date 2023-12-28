@@ -1,0 +1,30 @@
+<ion-list style="margin-top: 12px">
+  <ion-item *ngFor="let view of getSkeleltonArray()">
+    <ion-skeleton-text
+      *ngIf="hasThumbnail"
+      animated
+      style="width: 60px; height: 60px; border-radius: 50%"
+      slot="start"
+    ></ion-skeleton-text>
+    <ion-label>
+      <h3>
+        <ion-skeleton-text
+          animated
+          style="width: 50%; border-radius: 10px"
+        ></ion-skeleton-text>
+      </h3>
+      <p>
+        <ion-skeleton-text
+          animated
+          style="width: 80%; border-radius: 10px"
+        ></ion-skeleton-text>
+      </p>
+      <p>
+        <ion-skeleton-text
+          animated
+          style="width: 60%; border-radius: 10px"
+        ></ion-skeleton-text>
+      </p>
+    </ion-label>
+  </ion-item>
+</ion-list>

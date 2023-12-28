@@ -1,13 +1,148 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title> Profile </ion-title>
+    <ion-title> My Profile </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <!-- Profile Image -->
+        <ion-img [src]="" alt="Profile Image"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <!-- User Details Form -->
+        <form [formGroup]="profileForm">
+          <ion-input
+            mode="md"
+            label="Display Name *"
+            label-placement="floating"
+            fill="outline"
+            placeholder="Enter text"
+          ></ion-input>
+          <ion-text
+            color="danger"
+            *ngIf="profileForm.get('displayName')?.hasError('required')"
+          >
+            Display Name is required.
+          </ion-text>
+          <br />
+
+          <ion-input
+          mode="md"
+          label="First Name *"
+          formControlName="firstName" 
+          label-placement="floating"
+          fill="outline"
+          placeholder="Enter text"
+        ></ion-input>
+        <ion-text
+          color="danger"
+          *ngIf="profileForm.get('displayName')?.hasError('required')"
+        >
+          Display Name is required.
+        </ion-text>
+        <br />
+
+          <ion-input
+            mode="md"
+            label="Email:"
+            counter="true"
+            maxlength="100"
+            fill="outline"
+            helper-text="Enter an email"
+            error-text="Please enter a valid email"
+          ></ion-input>
+
+          <ion-item>
+            <ion-label position="floating">First Name *</ion-label>
+            <ion-input formControlName="firstName" required></ion-input>
+          </ion-item>
+
+          <ion-text
+            color="danger"
+            *ngIf="profileForm.get('displayName')?.hasError('required')"
+          >
+            Display Name is required.
+          </ion-text>
+          <ion-item>
+            <ion-label position="floating">Last Name</ion-label>
+            <ion-input formControlName="lastName"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating"
+              >About yourself (Max char 100)</ion-label
+            >
+            <ion-textarea
+              formControlName="aboutYourself"
+              maxlength="100"
+            ></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Your area of interest</ion-label>
+            <ion-select multiple formControlName="areaOfInterest">
+              <ion-select-option value="Backend">Backend</ion-select-option>
+              <ion-select-option value="Frontend">Frontend</ion-select-option>
+              <!-- Add more options as needed -->
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Are you a student or a professional?</ion-label>
+            <ion-select formControlName="studentOrProfessional">
+              <ion-select-option value="Student">Student</ion-select-option>
+              <ion-select-option value="Professional"
+                >Professional</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+
+          <!-- Professional-specific fields -->
+          <ng-container
+            *ngIf="profileForm.get('studentOrProfessional')?.value === 'Professional'"
+          >
+            <ion-item>
+              <ion-label>Experience</ion-label>
+              <ion-select formControlName="experience">
+                <ion-select-option value="0-5">0-5 years</ion-select-option>
+                <ion-select-option value="5-10">5-10 years</ion-select-option>
+                <ion-select-option value="10+"
+                  >10 years and above</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Expertise</ion-label>
+              <ion-input formControlName="expertise"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating"
+                >Mention your role (Max char 200)</ion-label
+              >
+              <ion-textarea
+                formControlName="mentionYourRole"
+                maxlength="200"
+              ></ion-textarea>
+            </ion-item>
+          </ng-container>
+
+          <!-- Save Button -->
+          <ion-button
+            expand="full"
+            [disabled]="!profileForm.valid"
+            (click)="saveProfile()"
+          >
+            Save
+          </ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -7,8 +7,14 @@
     </ion-buttons>
     <ion-title>Binder</ion-title>
     <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon name="cart"></ion-icon>
+      <ion-button (click)="goToCartPage()" class="cart-button">
+        <ion-icon size="large" name="cart"></ion-icon>
+        <ion-badge
+          *ngIf="totalItemsInCart > 0"
+          color="danger"
+          class="cart-badge"
+          >{{ totalItemsInCart }}</ion-badge
+        >
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -19,17 +25,56 @@
     (afterinit)="onSwiperReady()"
     [autoplay]="true"
     [keyboard]="true"
-    [loop]="true"
     [pagination]="true"
-    (slideChange)="onSlideChange($event)"
   >
-    @for (item of [1,2,3,4]; track $index) {
     <swiper-slide>
       <img
         src="https://images.pexels.com/photos/18111140/pexels-photo-18111140/free-photo-of-sign-of-casino-cinema-hanging-on-facade.jpeg"
         alt="banners"
       />
     </swiper-slide>
-    }
   </swiper-container>
+
+  <ion-searchbar
+    mode="ios"
+    showClearButton="never"
+    placeholder="Search"
+    (ionInput)="onSearchChange($event)"
+  ></ion-searchbar>
+
+  <!-- Sort button -->
+  <ion-button (click)="toggleSortDirection()">
+    Sort {{ sortDirection === 'asc' ? 'Ascending' : 'Descending' }}
+  </ion-button>
+
+  <!-- Courses section starts -->
+
+  @for (course of filteredCourses; track $index) {
+  <ion-card mode="ios">
+    <ion-card-header mode="md">
+      <ion-card-title>{{ course.courseName }}</ion-card-title>
+      <ion-card-subtitle>{{ course.author }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        <strong>Actual Price:</strong>
+        <span class="price">{{ course.actualPrice }}</span>
+      </p>
+      <p><strong>Discounted Price:</strong> {{ course.discountPrice }}</p>
+      <p>
+        <ion-chip *ngFor="let tag of course.tags"> {{ tag }} </ion-chip>
+      </p>
+      <ion-button (click)="addToCart(course)">
+        <ion-icon name="cart"></ion-icon
+      ></ion-button>
+      <ion-button (click)="addToWishlist(course)">
+        <ion-icon
+          [name]="!!courseService.isInWishlist(course)?'star':'heart'"
+        ></ion-icon>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+  }
+
+  <!-- Courses section ends -->
 </ion-content>

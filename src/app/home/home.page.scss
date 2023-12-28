@@ -16,3 +16,20 @@ swiper-slide img {
   border-radius: 12px;
   object-fit: cover;
 }
+
+ion-header {
+  .cart-button {
+    position: relative;
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: 0; /* Adjust the top position as needed */
+    right: -5px; /* Adjust the right position as needed */
+  }
+}
+ion-content {
+  .price {
+    text-decoration: line-through;
+  }
+}

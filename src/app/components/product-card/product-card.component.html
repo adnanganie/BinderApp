@@ -1,0 +1,28 @@
+<ion-card mode="ios">
+  <div class="img-wrapper" hidden>
+    <img [src]="imgSrc" />
+  </div>
+  <ion-icon
+    class="icon"
+    size="large"
+    color="primary"
+    (click)="iconClickAction()"
+    [name]="isInCart ? 'checkmark-circle' : 'add-circle'"
+  ></ion-icon>
+
+  <ion-card-content class="ion-text-left" (click)="onCardContentAction()">
+    <ion-text class="product-desc">
+      <p>{{ title }}</p>
+      <p class="f-s-12">{{ subTitle1 }}</p>
+    </ion-text>
+
+    <div class="price-wrapper">
+      <ion-text color="medium" *ngIf="subTitle2">
+        <p class="price">{{ subTitle2 }}</p>
+      </ion-text>
+      <ion-text color="primary">
+        <p class="final-price">{{ subTitle3 }}</p>
+      </ion-text>
+    </div>
+  </ion-card-content>
+</ion-card>
