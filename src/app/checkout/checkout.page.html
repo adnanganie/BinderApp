@@ -1,0 +1,83 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title> Checkout </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="notifications"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" color="light">
+  <ion-list [inset]="true" *ngIf="cartCourses?.length">
+    @for (course of cartCourses; track $index) {
+    <ion-item-sliding>
+      <ion-item [button]="true">
+        <ion-label>{{ course.courseName }}</ion-label>
+        <ion-note color="dark" slot="end"
+          >{{ course.actualPrice | currency: 'INR' }}</ion-note
+        >
+        <ion-item-options slot="end">
+          <ion-item-option color="tertiary">
+            <ion-icon
+              slot="icon-only"
+              name="star"
+              (click)="moveCourseToWishlist(course)"
+            ></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="danger" expandable="true">
+            <ion-icon
+              slot="icon-only"
+              name="trash"
+              (click)="deleteCourse(course)"
+            ></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+
+        <!-- <ion-buttons slot="end">
+        <ion-button (click)="moveCourseToWishlist(course)"
+          >Move to Wishlist</ion-button
+        >
+        <ion-button color="danger" (click)="deleteCourse(course)"
+          >Delete</ion-button
+        >
+      </ion-buttons> -->
+      </ion-item>
+    </ion-item-sliding>
+    }
+  </ion-list>
+
+  <ng-container *ngIf="cartCourses?.length">
+    <ion-item-divider></ion-item-divider>
+    <ion-item [button]="true" [detail]="false">
+      <ion-label>Total Cost</ion-label>
+      <ion-note color="dark" slot="end"
+        >{{ totalCost | currency: 'INR' }}</ion-note
+      >
+    </ion-item>
+
+    <ion-item [button]="true" [detail]="false">
+      <ion-label>Total Savings</ion-label>
+      <ion-note color="dark" slot="end"
+        >{{ totalSavings | currency: 'INR' }}</ion-note
+      >
+    </ion-item>
+
+    <ion-button shape="round" expand="full" (click)="checkout()"
+      >Checkout</ion-button
+    >
+  </ng-container>
+</ion-content>
+
+<!-- Empty View -->
+<app-empty-view
+  *ngIf="cartCourses?.length === 0"
+  title="No data"
+  icon="cart"
+  (buttonClicked)="doRefresh()"
+></app-empty-view>
+<!-- Empty View ends -->

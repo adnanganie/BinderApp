@@ -1,7 +1,61 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title> Wish List </ion-title>
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-icon name="logo-apple"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Wish List</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goToCartPage()" class="cart-button">
+        <ion-icon size="large" name="cart"></ion-icon>
+        <ion-badge
+          *ngIf="totalItemsInCart > 0"
+          color="danger"
+          class="cart-badge"
+          >{{ totalItemsInCart }}</ion-badge
+        >
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content class="ion-padding" color="light">
+  <ion-list [inset]="true" *ngIf="wishlistCourses?.length">
+    @for (course of wishlistCourses; track $index) {
+
+    <ion-item [button]="true">
+      <ion-label>{{ course.courseName }}</ion-label>
+      <ion-icon
+        color="primary"
+        slot="end"
+        name="cart"
+        (click)="addToCart(course)"
+      ></ion-icon>
+      <ion-icon
+        color="danger"
+        slot="end"
+        name="trash"
+        (click)="removeFromWishlist(course)"
+      ></ion-icon>
+    </ion-item>
+    }
+  </ion-list>
+</ion-content>
+
+<!-- Skeleton screen starts. Shows skeleton views, default size is 10 -->
+<app-skeleton-view
+  *ngIf="loading && wishlistCourses?.length === 0"
+  [hasThumbnail]="false"
+  [skeletonSize]="10"
+>
+</app-skeleton-view>
+<!-- Skeleton screen ends -->
+<!-- Empty View -->
+<app-empty-view
+  *ngIf="!loading && wishlistCourses?.length === 0"
+  title="You have not items in wish list. Please add first"
+  icon="cart"
+  (buttonClicked)="doRefresh()"
+></app-empty-view>
+<!-- Empty View ends -->

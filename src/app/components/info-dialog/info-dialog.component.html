@@ -1,0 +1,17 @@
+<div class="content-wrapper">
+  <div class="img-wrapper">
+    <img src="../../assets/icon/check.png" alt="img" />
+  </div>
+  <div class="title" *ngIf="title">
+    {{ title }}
+  </div>
+  <div class="sub-title1" *ngIf="subTitle1">
+    {{ subTitle1 }}
+  </div>
+
+  <div class="bottom-button">
+    <ion-button color="primary" mode="ios" shape="round" (click)="closeDialog()"
+      >OK
+    </ion-button>
+  </div>
+</div>

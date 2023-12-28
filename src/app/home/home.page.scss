@@ -1,20 +1,13 @@
 swiper-container {
-  height: 148px !important;
+  height: 150px !important;
   border-radius: 5px;
-  img {
-    width: 90%;
-  }
-
-  --swiper-pagination-bullet-inactive-color: var(--ion-color-medium, #cccccc);
-  --swiper-pagination-color: var(--ion-color-primary, #3880ff);
 }
 
 swiper-slide img {
   display: block;
-  width: 100%;
   height: 100%;
+  width: 100%;
   border-radius: 12px;
-  object-fit: cover;
 }
 
 ion-header {
@@ -24,8 +17,8 @@ ion-header {
 
   .cart-badge {
     position: absolute;
-    top: 0; /* Adjust the top position as needed */
-    right: -5px; /* Adjust the right position as needed */
+    top: 0;
+    right: -5px;
   }
 }
 ion-content {

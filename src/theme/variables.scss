@@ -288,3 +288,15 @@ html {
 .font-regular {
   font-family: 'regular' !important;
 }
+
+.success-toast {
+  --background: #81c784;
+}
+
+.warning-toast {
+  --background: #ff8a65;
+}
+
+.error-toast {
+  --background: #e57373;
+}

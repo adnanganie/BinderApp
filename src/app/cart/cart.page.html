@@ -1,0 +1,48 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title> Cart </ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="notifications"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list [inset]="true" *ngIf="cartCourses?.length">
+    @for (course of cartCourses; track $index) {
+    <ion-item [button]="true" [detail]="false">
+      <ion-label>{{ course.courseName }}</ion-label>
+      <ion-note color="dark" slot="end"
+        >{{ course.actualPrice | currency: 'INR' }}</ion-note
+      >
+    </ion-item>
+    }
+  </ion-list>
+  <ng-container *ngIf="cartCourses?.length">
+    <ion-item-divider></ion-item-divider>
+    <ion-item [button]="true" detail="false" lines="none">
+      <ion-label>Total Cost:</ion-label>
+      <ion-note color="dark" slot="end"
+        >{{ totalCost | currency: 'INR' }}</ion-note
+      >
+    </ion-item>
+
+    <ion-button expand="full" (click)="goToCheckout()" shape="round">
+      Go to Checkout
+    </ion-button>
+  </ng-container>
+</ion-content>
+
+<!-- Empty View -->
+<app-empty-view
+  *ngIf="cartCourses?.length === 0"
+  title="No data"
+  icon="cart"
+  (buttonClicked)="doRefresh()"
+></app-empty-view>
+<!-- Empty View ends -->

@@ -3,7 +3,13 @@ import { Swiper } from 'swiper'
 import { register } from 'swiper/element/bundle'
 import { Course } from '../models/courses.model'
 import { CourseService } from '../services/course.service'
-import { IonInfiniteScroll, ToastController } from '@ionic/angular'
+import {
+  IonInfiniteScroll,
+  PopoverController,
+  ToastController,
+} from '@ionic/angular'
+import { Router } from '@angular/router'
+import { SortPopoverComponent } from '../components/sort-popover.component'
 
 register()
 @Component({
@@ -31,6 +37,8 @@ export class HomePage {
   currentPage = 1
 
   constructor(
+    private router: Router,
+    private popoverController: PopoverController,
     public courseService: CourseService,
     public toastController: ToastController
   ) {}
@@ -40,7 +48,7 @@ export class HomePage {
   }
 
   ngOnInit() {
-    this.courseService.getCoursesWithActualPrice().subscribe((courses) => {
+    this.courseService.getClonedCourses().subscribe((courses) => {
       this.listOfcourses = courses
       this.paginatedCourses()
     })
@@ -54,10 +62,8 @@ export class HomePage {
     const courseName = course.courseName
 
     if (this.courseService.isInCart(course)) {
-      // Course already exists in the cart, show error toast
       this.showErrorToast(courseName)
     } else {
-      // Add course to cart and show success toast
       this.courseService.addToCart(course)
       this.showSuccessToast(courseName)
     }
@@ -84,12 +90,8 @@ export class HomePage {
           )
       )
       .sort((a, b) => {
-        const priceA = parseFloat(
-          a.actualPrice.replace('₹', '').replace(',', '')
-        )
-        const priceB = parseFloat(
-          b.actualPrice.replace('₹', '').replace(',', '')
-        )
+        const priceA = a.actualPrice
+        const priceB = b.actualPrice
 
         if (this.sortDirection === 'asc') {
           return priceA - priceB
@@ -122,10 +124,7 @@ export class HomePage {
     this.filteredCourses = this.courses
   }
 
-  toggleSortDirection(): void {
-    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc'
-    this.applyFilters()
-  }
+
 
   paginatedCourses() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage
@@ -163,6 +162,7 @@ export class HomePage {
       message: `Course "${courseName}" successfully added to the cart.`,
       duration: 2000,
       position: 'bottom',
+      cssClass: 'success-toast',
     })
 
     await toast.present()
@@ -173,7 +173,8 @@ export class HomePage {
       message: `Course "${courseName}" already exists in the cart.`,
       duration: 2000,
       position: 'bottom',
-      color: 'danger', // Optional: Set color for error messages
+      color: 'danger',
+      cssClass: 'error-toast',
     })
 
     await toast.present()
@@ -182,5 +183,29 @@ export class HomePage {
   /**
    * Navigate to the cart-page
    */
-  goToCartPage() {}
+  goToCartPage() {
+    this.router.navigateByUrl('cart')
+  }
+
+  /**
+   * Present Sort popover
+   * @param ev
+   * @returns
+   */
+  async presentSortPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: SortPopoverComponent,
+      event: ev,
+    })
+
+    popover.onDidDismiss().then((result) => {
+      if (result.role === 'cancel') {
+        return
+      }
+      this.sortDirection = result.data.direction
+      this.applyFilters()
+    })
+
+    return await popover.present()
+  }
 }

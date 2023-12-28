@@ -7,6 +7,9 @@
     </ion-buttons>
     <ion-title>Binder</ion-title>
     <ion-buttons slot="end">
+      <ion-button (click)="presentSortPopover($event)">
+        <ion-icon name="funnel"></ion-icon>
+      </ion-button>
       <ion-button (click)="goToCartPage()" class="cart-button">
         <ion-icon size="large" name="cart"></ion-icon>
         <ion-badge
@@ -27,12 +30,14 @@
     [keyboard]="true"
     [pagination]="true"
   >
+    @for (index of [1,2,3]; track $index) {
     <swiper-slide>
       <img
-        src="https://images.pexels.com/photos/18111140/pexels-photo-18111140/free-photo-of-sign-of-casino-cinema-hanging-on-facade.jpeg"
+        [src]="'../../assets/images/banner-' + index + '.png'"
         alt="banners"
       />
     </swiper-slide>
+    }
   </swiper-container>
 
   <ion-searchbar
@@ -43,18 +48,10 @@
     (ionClear)="onSearchCancel($event)"
   ></ion-searchbar>
 
-  <!-- Sort button -->
-  <ion-button (click)="toggleSortDirection()" shape="round">
-    Sort {{ sortDirection === 'asc' ? 'Asc' : 'Aesc' }}
-  </ion-button>
-
   <!-- Courses section starts -->
   @for (course of filteredCourses; track $index) {
   <ion-card mode="ios">
-    <img
-      alt="image-placeholder"
-      src="https://ionicframework.com/docs/img/demos/card-media.png"
-    />
+    <img alt="image-placeholder" src="../../assets/images/banner-2.png" />
     <ion-card-header mode="md">
       <ion-card-title>{{ course.courseName }}</ion-card-title>
       <ion-card-subtitle>{{ course.author }}</ion-card-subtitle>
@@ -68,12 +65,20 @@
       <p>
         <ion-chip *ngFor="let tag of course.tags"> {{ tag }} </ion-chip>
       </p>
-      <ion-button (click)="addToCart(course)" shape="round" size="small">
-        <ion-icon name="cart"></ion-icon
+      <ion-button (click)="addToCart(course)" fill="clear" size="small">
+        <ion-icon slot="icon-only" name="cart"></ion-icon
       ></ion-button>
-      <ion-button (click)="addToWishlist(course)" shape="round" size="small">
+
+      <ion-button
+        (click)="addToWishlist(course)"
+        fill="clear"
+        shape="round"
+        size="small"
+      >
         <ion-icon
-          [name]="!!courseService.isInWishlist(course)?'star':'heart'"
+          slot="icon-only"
+          [color]="!!courseService.isInWishlist(course)?'warning':'primary'"
+          name="star"
         ></ion-icon>
       </ion-button>
     </ion-card-content>

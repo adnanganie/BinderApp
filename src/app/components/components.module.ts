@@ -14,6 +14,8 @@ import { CourseItemComponent } from './course-item/course-item.component'
 import { ProductCardComponent } from './product-card/product-card.component'
 import { EmptyViewComponent } from './empty-view/empty-view.component'
 import { SkeletonViewComponent } from './skeleton-view/skeleton-view.component'
+import { InfoDialogComponent } from './info-dialog/info-dialog.component'
+import { SortPopoverComponent } from './sort-popover.component'
 
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule.forRoot()],
@@ -22,12 +24,16 @@ import { SkeletonViewComponent } from './skeleton-view/skeleton-view.component'
     ProductCardComponent,
     EmptyViewComponent,
     SkeletonViewComponent,
+    InfoDialogComponent,
+    SortPopoverComponent,
   ],
   exports: [
     CourseItemComponent,
     ProductCardComponent,
     EmptyViewComponent,
     SkeletonViewComponent,
+    InfoDialogComponent,
+    SortPopoverComponent,
   ],
 })
 export class ComponentsModule {}
