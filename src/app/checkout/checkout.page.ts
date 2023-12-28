@@ -55,6 +55,8 @@ export class CheckoutPage implements OnInit {
    * Move selected course to wish list from cart
    */
   moveCourseToWishlist(course: Course) {
+    console.log("dsdfsdsd");
+    
     this.courseService.addToWishlist(course)
     this.courseService.removeFromCart(course)
     this.loadCart()
