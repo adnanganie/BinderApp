@@ -58,10 +58,14 @@
     </ion-card-header>
     <ion-card-content>
       <p>
-        <strong>Actual Price:</strong>
-        <span class="price">{{ course.actualPrice }}</span>
+        <strong>Price </strong>
+        <span [class.price]="course.discountPercentage.length"
+          >{{ course.actualPrice }}</span
+        >
       </p>
-      <p><strong>Discounted Price:</strong> {{ course.discountPrice }}</p>
+      <p *ngIf="course.discountPercentage.length">
+        <strong>Discounted Price </strong> {{ course.discountPrice }}
+      </p>
       <p>
         <ion-chip *ngFor="let tag of course.tags"> {{ tag }} </ion-chip>
       </p>
@@ -80,6 +84,10 @@
           [color]="!!courseService.isInWishlist(course)?'warning':'primary'"
           name="star"
         ></ion-icon>
+      </ion-button>
+      <ion-button size="small" (click)="cardClickAction(course)" shape="round">
+        View
+        <ion-icon slot="end" name="chevron-forward"></ion-icon>
       </ion-button>
     </ion-card-content>
   </ion-card>

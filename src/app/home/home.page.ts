@@ -1,5 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core'
-import { Swiper } from 'swiper'
+import { Component, ViewChild } from '@angular/core'
 import { register } from 'swiper/element/bundle'
 import { Course } from '../models/courses.model'
 import { CourseService } from '../services/course.service'
@@ -8,7 +7,7 @@ import {
   PopoverController,
   ToastController,
 } from '@ionic/angular'
-import { Router } from '@angular/router'
+import { NavigationExtras, Router } from '@angular/router'
 import { SortPopoverComponent } from '../components/sort-popover.component'
 
 register()
@@ -19,10 +18,6 @@ register()
 })
 export class HomePage {
   @ViewChild(IonInfiniteScroll) infiniteScroll?: IonInfiniteScroll
-
-  @ViewChild('swiper')
-  swiperRef: ElementRef | undefined
-  swiper?: Swiper
 
   totalItemsInCart: number = 0 // Variable to store the total count
 
@@ -43,9 +38,7 @@ export class HomePage {
     public toastController: ToastController
   ) {}
 
-  onSwiperReady() {
-    this.swiper = this.swiperRef?.nativeElement.swiper
-  }
+  onSwiperReady() {}
 
   ngOnInit() {
     this.courseService.getClonedCourses().subscribe((courses) => {
@@ -85,7 +78,7 @@ export class HomePage {
             .toLowerCase()
             .includes(this.searchTerm.toLowerCase()) ||
           course.author.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          course.tags.some((tag: string) =>
+          course.tags?.some((tag: string) =>
             tag.toLowerCase().includes(this.searchTerm.toLowerCase())
           )
       )
@@ -124,8 +117,6 @@ export class HomePage {
     this.filteredCourses = this.courses
   }
 
-
-
   paginatedCourses() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage
     const endIndex = startIndex + this.itemsPerPage
@@ -157,6 +148,10 @@ export class HomePage {
     }, 500)
   }
 
+  /**
+   * Show Success Toast
+   * @param courseName 
+   */
   async showSuccessToast(courseName: string): Promise<void> {
     const toast = await this.toastController.create({
       message: `Course "${courseName}" successfully added to the cart.`,
@@ -168,6 +163,10 @@ export class HomePage {
     await toast.present()
   }
 
+  /**
+   * Show error toast
+   * @param courseName 
+   */
   async showErrorToast(courseName: string): Promise<void> {
     const toast = await this.toastController.create({
       message: `Course "${courseName}" already exists in the cart.`,
@@ -207,5 +206,14 @@ export class HomePage {
     })
 
     return await popover.present()
+  }
+
+  cardClickAction(course: Course) {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        selectedCourse: course,
+      },
+    }
+    this.router.navigateByUrl('course-detail', navigationExtras)
   }
 }

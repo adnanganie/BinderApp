@@ -115,7 +115,7 @@ export class CheckoutPage implements OnInit {
         this.zone.run(() => {
           this.courseService.clearCart()
           this.loadCart()
-          this.router.navigateByUrl('tabs')
+          this.router.navigateByUrl('tabs', { replaceUrl: true })
         })
       }, 500)
     })

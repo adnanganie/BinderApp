@@ -1,6 +1,7 @@
 // profile.page.ts
 import { Component } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { Router } from '@angular/router'
 import { AlertController } from '@ionic/angular'
 
 @Component({
@@ -11,9 +12,8 @@ import { AlertController } from '@ionic/angular'
 export class ProfilePage {
   profileForm: FormGroup
 
-  profileImageUrl: string = 'assets/profile-image-placeholder.png'
-
   constructor(
+    private router: Router,
     private formBuilder: FormBuilder,
     private alertController: AlertController
   ) {
@@ -43,5 +43,7 @@ export class ProfilePage {
     }
   }
 
-  logout() {}
+  logout() {
+    this.router.navigateByUrl('login', { replaceUrl: true })
+  }
 }

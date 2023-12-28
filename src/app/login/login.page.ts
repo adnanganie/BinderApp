@@ -21,7 +21,6 @@ export class LoginPage {
   }
 
   login() {
-    this.router.navigateByUrl('tabs', { replaceUrl: true });
-
+    this.router.navigateByUrl('tabs', { replaceUrl: true })
   }
 }

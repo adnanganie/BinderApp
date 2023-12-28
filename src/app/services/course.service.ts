@@ -21,7 +21,7 @@ export class CourseService {
         courseName: 'Advanced Machine Learning',
         author: 'Alex Johnson',
         actualPrice: 1199,
-        discountPercentage: '15%',
+        discountPercentage: '',
         tags: ['Machine Learning', 'Python'],
       },
       {
