@@ -1,0 +1,17 @@
+ion-text {
+  font-size: 12px;
+  padding-left: 16px;
+}
+
+.centered-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circular-image {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}

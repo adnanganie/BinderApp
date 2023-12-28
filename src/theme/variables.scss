@@ -300,3 +300,19 @@ html {
 .error-toast {
   --background: #e57373;
 }
+
+ion-header {
+  .cart-button {
+    position: relative;
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: 0;
+    right: -5px;
+  }
+}
+
+.logo {
+  font-size: 56px !important;
+}

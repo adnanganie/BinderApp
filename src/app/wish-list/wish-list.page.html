@@ -1,9 +1,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button>
-        <ion-icon name="logo-apple"></ion-icon>
-      </ion-button>
+      <ion-icon class="logo" src="../../assets/images/logo.svg"></ion-icon>
     </ion-buttons>
     <ion-title>Wish List</ion-title>
     <ion-buttons slot="end">
@@ -24,7 +22,7 @@
   <ion-list [inset]="true" *ngIf="wishlistCourses?.length">
     @for (course of wishlistCourses; track $index) {
 
-    <ion-item [button]="true">
+    <ion-item [button]="true" detail="false">
       <ion-label>{{ course.courseName }}</ion-label>
       <ion-icon
         color="primary"

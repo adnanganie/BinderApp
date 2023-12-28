@@ -1,103 +1,101 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title> My Profile </ion-title>
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-icon class="logo" src="../../assets/images/logo.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" class="cart-button">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <ion-grid>
     <ion-row>
-      <ion-col size="12">
+      <ion-col size="12" class="centered-col">
         <!-- Profile Image -->
-        <ion-img
+        <img
+          class="circular-image"
           src="../../assets/images/banner-1.png"
           alt="Profile Image"
-        ></ion-img>
+        />
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col size="12">
         <!-- User Details Form -->
         <form [formGroup]="profileForm">
-          <ion-input
-            mode="md"
-            label="Display Name *"
-            label-placement="floating"
-            fill="outline"
-            placeholder="Enter text"
-          ></ion-input>
+          <ion-item>
+            <ion-input
+              label="Display Name *"
+              labelPlacement="floating"
+              formControlName="displayName"
+              required
+            ></ion-input>
+          </ion-item>
           <ion-text
             color="danger"
             *ngIf="profileForm.get('displayName')?.hasError('required')"
           >
             Display Name is required.
           </ion-text>
-          <br />
-
-          <ion-input
-            mode="md"
-            label="First Name *"
-            formControlName="firstName"
-            label-placement="floating"
-            fill="outline"
-            placeholder="Enter text"
-          ></ion-input>
-          <ion-text
-            color="danger"
-            *ngIf="profileForm.get('displayName')?.hasError('required')"
-          >
-            Display Name is required.
-          </ion-text>
-          <br />
-
-          <ion-input
-            mode="md"
-            label="Email:"
-            counter="true"
-            maxlength="100"
-            fill="outline"
-            helper-text="Enter an email"
-            error-text="Please enter a valid email"
-          ></ion-input>
 
           <ion-item>
-            <ion-label position="floating">First Name *</ion-label>
-            <ion-input formControlName="firstName" required></ion-input>
+            <ion-input
+              label="First Name *"
+              labelPlacement="floating"
+              formControlName="firstName"
+              required
+            ></ion-input>
           </ion-item>
 
           <ion-text
             color="danger"
-            *ngIf="profileForm.get('displayName')?.hasError('required')"
+            *ngIf="profileForm.get('firstName')?.hasError('required')"
           >
-            Display Name is required.
+            First Name is required.
           </ion-text>
+
           <ion-item>
-            <ion-label position="floating">Last Name</ion-label>
-            <ion-input formControlName="lastName"></ion-input>
+            <ion-input
+              label="Last Name"
+              labelPlacement="floating"
+              formControlName="lastName"
+            ></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label position="floating"
-              >About yourself (Max char 100)</ion-label
-            >
             <ion-textarea
+              label="About yourself (Max char 100)"
+              labelPlacement="floating"
               formControlName="aboutYourself"
               maxlength="100"
             ></ion-textarea>
           </ion-item>
 
           <ion-item>
-            <ion-label position="floating">Your area of interest</ion-label>
-            <ion-select multiple formControlName="areaOfInterest">
+            <ion-select
+              multiple
+              formControlName="areaOfInterest"
+              label="Your area of interest"
+              labelPlacement="floating"
+            >
               <ion-select-option value="Backend">Backend</ion-select-option>
               <ion-select-option value="Frontend">Frontend</ion-select-option>
-              <!-- Add more options as needed -->
             </ion-select>
           </ion-item>
 
           <ion-item>
-            <ion-label>Are you a student or a professional?</ion-label>
-            <ion-select formControlName="studentOrProfessional">
+            <ion-select
+              formControlName="studentOrProfessional"
+              label="Are you a student or a professional?"
+              labelPlacement="floating"
+            >
               <ion-select-option value="Student">Student</ion-select-option>
               <ion-select-option value="Professional"
                 >Professional</ion-select-option
@@ -110,8 +108,11 @@
             *ngIf="profileForm.get('studentOrProfessional')?.value === 'Professional'"
           >
             <ion-item>
-              <ion-label>Experience</ion-label>
-              <ion-select formControlName="experience">
+              <ion-select
+                formControlName="experience"
+                label="Experience"
+                labelPlacement="floating"
+              >
                 <ion-select-option value="0-5">0-5 years</ion-select-option>
                 <ion-select-option value="5-10">5-10 years</ion-select-option>
                 <ion-select-option value="10+"
@@ -121,23 +122,27 @@
             </ion-item>
 
             <ion-item>
-              <ion-label>Expertise</ion-label>
-              <ion-input formControlName="expertise"></ion-input>
+              <ion-input
+                label="Expertise"
+                labelPlacement="floating"
+                formControlName="expertise"
+              ></ion-input>
             </ion-item>
 
-            <ion-item>
-              <ion-label position="floating"
-                >Mention your role (Max char 200)</ion-label
-              >
+            <ion-item lines="none">
               <ion-textarea
+                label="Mention your role (Max char 200)"
                 formControlName="mentionYourRole"
+                labelPlacement="floating"
                 maxlength="200"
+                rows="5"
               ></ion-textarea>
             </ion-item>
           </ng-container>
 
           <!-- Save Button -->
           <ion-button
+            shape="round"
             expand="full"
             [disabled]="!profileForm.valid"
             (click)="saveProfile()"

@@ -1,0 +1,41 @@
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center" style="height: 100vh">
+      <ion-col size-md="6" size-lg="4" size-xl="3">
+        <ion-img src="../../assets/images/logo.svg" alt="Logo"></ion-img>
+
+        <form [formGroup]="loginForm">
+          <ion-input
+            mode="md"
+            label="Username"
+            type="text"
+            formControlName="username"
+            label-placement="floating"
+            fill="outline"
+            placeholder="Enter Username"
+          ></ion-input>
+
+          <br />
+          <ion-input
+            mode="md"
+            label="Password"
+            type="password"
+            formControlName="password"
+            label-placement="floating"
+            fill="outline"
+            placeholder="Enter Password"
+          ></ion-input>
+          <br />
+
+          <ion-button
+            shape="round"
+            expand="full"
+            (click)="login()"
+            [disabled]="!loginForm.valid"
+            >Login</ion-button
+          >
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

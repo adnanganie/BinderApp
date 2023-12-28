@@ -24,21 +24,17 @@ const routes: Routes = [
         loadChildren: () =>
           import('../profile/profile.module').then((m) => m.ProfilePageModule),
       },
-      {
-        path: '',
-        redirectTo: '/tabs/home',
-        pathMatch: 'full',
-      },
     ],
   },
   {
     path: '',
-    redirectTo: '/tabs/home',
+    redirectTo: 'tabs/home',
     pathMatch: 'full',
   },
 ]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
 export class TabsPageRoutingModule {}

@@ -42,4 +42,6 @@ export class ProfilePage {
       await alert.present()
     }
   }
+
+  logout() {}
 }
