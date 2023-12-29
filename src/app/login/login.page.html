@@ -4,7 +4,7 @@
       <ion-col size-md="6" size-lg="4" size-xl="3">
         <ion-img src="../../assets/images/logo.svg" alt="Logo"></ion-img>
 
-        <form [formGroup]="loginForm">
+        <form *ngIf="loginForm" [formGroup]="loginForm">
           <ion-input
             mode="md"
             label="Username"

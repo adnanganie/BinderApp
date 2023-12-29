@@ -8,10 +8,7 @@ import { Router } from '@angular/router'
   styleUrls: ['login.page.scss'],
 })
 export class LoginPage {
-  loginForm: FormGroup
-
-  username: string | undefined
-  password: string | undefined
+  loginForm?: FormGroup
 
   constructor(private formBuilder: FormBuilder, private router: Router) {
     this.loginForm = this.formBuilder.group({
