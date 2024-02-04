@@ -23,5 +23,5 @@ This repository contains a customizable e-commerce app template built using the 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/adnanganie/BinderApp.git
-   cd BinderApp
+   git clone https://github.com/adnanganie/IonicE-CommerceTem.git
+   cd IonicE-CommerceTem
